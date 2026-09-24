@@ -1,0 +1,4 @@
+
+--------WSL--------code
+
+iconv -f UTF-8 -t ASCII//TRANSLIT input.tbl -o output1.tbl

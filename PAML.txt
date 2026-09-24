@@ -1,0 +1,71 @@
+Write the following code:
+
+# Run the following code
+
+git clone https://github.com/abacus-gene/paml.git
+
+# Move to the cloned repository. Make sure you have cloned it in the correct
+# location of your local disk.
+
+cd paml
+
+# If there are executable files for Windows, you may remove them.
+
+rm bin/*.exe
+
+# Move to the `src` directory to compile the software.
+
+cd src
+make -f Makefile
+
+# List all the compiled programs that are part of PAML and
+# remove unnecessary files.
+
+ls -lF
+rm *.o
+
+# Create a `bin` directory, which you can then export to your PATH.
+
+mkdir ../bin
+
+# Move the compiled programs to `bin`.
+
+mv baseml basemlg chi2 codeml evolver infinitesites mcmctree pamp yn00 ../bin
+
+# Test that you can run some PAML programs such as BASEML, CODEML, or evolver.
+
+# Export the executable path from your current directory
+# Your current dirrectory may be (/mnt/your path/paml/src),checked by "pwd" code, here the "codeml.ctl" file is present
+
+export PATH=<path_to_bin>/bin:$PATH     #for example (export PATH=/mnt/your path/paml/bin:$PATH)
+
+# Required file (alignment.phy and tree_file.trees)
+
+# Open the "codeml.ctl" file  and edit your file name and optimize the model. 
+     
+	 seqfile = ../examples/Your_file_alignment.phy  * sequence data filename
+     *treefile = ../examples/Your file_tree_file.trees * tree file name
+      outfile = rename           * main result file name
+   
+   Reminder: before run the PAML, must change the ctl file for model optimizations, like NSsites, have a look git documentation https://github.com/abacus-gene/paml.git
+  
+  just set two thigns  "runmode = 0" and "NSsites: 0 1 2 7 8"
+
+##
+
+# optional
+# For permanent code run
+
+echo 'export PATH=$PATH:/mnt/your path/paml/bin' >> ~/.bashrc
+source ~/.bashrc
+
+# If you see like that mesaage: codeml.ctl did not found and please give your full patht. Then just provide the path where "codeml.ctl" is present. For example (/mnt/your path/paml/src/codeml.ctl)
+
+# if any error found in model selections must remove the star (*) from tree file corrected file will be (treefile = ../examples/tree file.trees * tree file name)
+
+
+##just for check 
+bin/baseml
+bin/codeml
+bin/evolver
+

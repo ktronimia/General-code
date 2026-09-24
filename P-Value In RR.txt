@@ -1,0 +1,20 @@
+
+data <- matrix(c(60,
+                 41,
+                 28,
+                 13,
+                 5),
+               nrow = 5,
+               byrow = TRUE)
+data
+chisq.test(data)
+fisher.test(data)
+
+#########Mann-Whitney test##########
+
+HCC <- c(15.62, 23.29, 30.96)
+Non_HCC <- c(16.55,20.00, 23.45)
+
+HCC
+Non_HCC
+wilcox.test(HCC)

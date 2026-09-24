@@ -1,0 +1,46 @@
+##Git clone file
+
+https://github.com/davidemms/OrthoFinder/releases
+
+#or manually download
+
+#Unzip the file and go to the directory 
+
+#Name of the environment "Orthifinder"
+
+conda create -n orthofinder python=3.10 -y
+conda activate orthofinder
+
+##Install all tools automatically 
+
+conda install -c bioconda orthofinder
+
+##Check path
+
+which diamond
+which mcl
+which mafft
+which fasttree
+
+##Check version
+
+orthofinder -h
+diamond -h
+mafft --help
+mcl --version
+fasttree -help
+
+##Run following code
+orthofinder -f path/Proteomes/
+
+
+##Or manually install dependensis (nor required)
+sudo apt update
+sudo apt install build-essential cmake git python3 python3-pip -y
+pip install numpy scipy scikit-learn matplotlib pandas
+sudo apt install python3-scipy python3-numpy -y
+sudo apt install diamond-aligner
+sudo apt install mcl
+sudo apt install mafft
+sudo apt install fasttree
+sudo apt install iqtree

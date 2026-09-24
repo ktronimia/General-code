@@ -1,0 +1,57 @@
+First align the file using the muscle then generate phylogenetic tree
+
+>>Step-01
+*****************Install Muscle******************
+
+sudo apt install muscle
+or (if not work the above code)
+
+conda install -c bioconda muscle
+
+
+muscle -align unaligned.fasta -output aligned.fasta
+
+
+>>cut the specific region for phylogeny if need
+
+conda install -c bioconda seqkit
+
+seqkit subseq -r 740:1200 aligned_sequences.fasta > region_740_1200.fasta
+
+
+>>Step-02 (Using iqtree) OR step-03
+
+******************Phylogenetic tree************************
+sudo apt install iqtree
+
+or 
+
+conda install -c bioconda iqtree
+
+
+iqtree2 -s aligned_sequences.fasta -m MFP -bb 1000 -nt AUTO
+
+or
+iqtree3 -s aligned_sequences.fasta -st DNA -m K3Pu+F+I -B 1000 --nstep 1000 -nt AUTO  --safe -pre hbv_run
+
+
+
+>>Step-03 (Using RAxML)
+*********************Phylogenetic tree***************************
+### convert alignment.fasta file to alignment.phy file by using following code
+nano fasta_file_convert_phylip_file.py
+##paste the followin code##
+python
+from Bio import AlignIO
+AlignIO.convert("aligned.fasta", "fasta", "alignment.phy", "phylip-relaxed")
+
+##save by using shortcut " Ctrl+O" and leave by using "Ctrl+x"
+
+## then run the following code
+
+python3 fasta_file_convert_phylip_file.py
+
+
+sudo apt install raxml
+raxmlHPC-PTHREADS -T 4 -s alignment.phy -n GTR_G_I_result -m GTRGAMMAI -p 12345 -x 12345 -# 1000 -f a
+########PTHREAD -T set your core number present in you PC#########

@@ -1,0 +1,83 @@
+from Bio import SeqIO
+import csv
+import matplotlib.pyplot as plt
+
+def find_mutations(reference, sample, case_sensitive=False):
+    if not case_sensitive:
+        reference = reference.upper()
+        sample = sample.upper()
+
+    min_len = min(len(reference), len(sample))
+    mutations = []
+
+    for i in range(min_len):
+        if reference[i] != sample[i]:
+            mutations.append((i + 1, reference[i], sample[i]))
+
+    if len(reference) > min_len:
+        for i in range(min_len, len(reference)):
+            mutations.append((i + 1, reference[i], '-'))  # deletion
+    elif len(sample) > min_len:
+        for i in range(min_len, len(sample)):
+            mutations.append((i + 1, '-', sample[i]))  # insertion
+
+    return mutations
+
+def read_fasta_sequences(fasta_file):
+    sequences = {}
+    for record in SeqIO.parse(fasta_file, "fasta"):
+        sequences[record.id] = str(record.seq)
+    return sequences
+
+def save_mutations_to_csv(mutation_data, output_file="mutations.csv"):
+    with open(output_file, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Sample", "Position", "Reference", "Sample"])
+        for sample, mutations in mutation_data.items():
+            for pos, ref, alt in mutations:
+                writer.writerow([sample, pos, ref, alt])
+
+def plot_mutations(mutation_data):
+    plt.figure(figsize=(12, 6))
+    for idx, (sample, mutations) in enumerate(mutation_data.items()):
+        positions = [pos for pos, _, _ in mutations]
+        plt.scatter(positions, [idx]*len(positions), label=sample, s=15)
+
+    plt.xlabel("Nucleotide Position")
+    plt.ylabel("Sample Index")
+    plt.title("Mutation Positions Across Samples")
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+
+# === 🧪 MAIN EXECUTION ===
+fasta_path = "sequences.fasta"  # ⬅️ Replace with your actual file
+case_sensitive = True  # Set to False to ignore case
+
+# Load sequences
+all_sequences = read_fasta_sequences(fasta_path)
+
+# Use first sequence as reference
+ref_id = list(all_sequences.keys())[0]
+ref_seq = all_sequences[ref_id]
+
+# Compare others to reference
+mutation_results = {}
+for sample_id, sample_seq in all_sequences.items():
+    if sample_id == ref_id:
+        continue
+    mutations = find_mutations(ref_seq, sample_seq, case_sensitive)
+    mutation_results[sample_id] = mutations
+
+# Print results
+for sample, muts in mutation_results.items():
+    print(f"\nMutations in {sample}:")
+    for pos, ref, alt in muts:
+        print(f"  Position {pos}: {ref} → {alt}")
+
+# Save to CSV (optional)
+save_mutations_to_csv(mutation_results, "mutation_output.csv")
+
+# Visualize (optional)
+plot_mutations(mutation_results)

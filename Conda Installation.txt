@@ -1,0 +1,52 @@
+
+*******************Conda Install***********************
+# 1. Update system packages
+sudo apt update && sudo apt upgrade -y
+
+# 2. Install dependencies (wget, bzip2)
+sudo apt install wget bzip2 -y
+
+# 3. Download the latest Miniconda installer (Linux 64-bit)
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+
+# 4. Run the installer
+bash Miniconda3-latest-Linux-x86_64.sh
+
+# (Follow the prompts, press ENTER, type "yes" when asked to accept license, 
+# and choose installation location, default is usually fine)
+
+
+# 5. Activate Conda (reload shell)
+source ~/.bashrc
+
+# 6. Test if conda is installed
+conda --version
+
+if not working then add run the followig code
+
+ls /home/ktronim/miniconda3
+
+echo 'export PATH="$HOME/miniconda3/bin:$PATH"' >> ~/.bashrc
+
+source ~/.bashrc
+
+conda --version
+
+conda config --add channels defaults
+conda config --add channels bioconda
+conda config --add channels conda-forge
+
+
+******************Install Bioython***************
+# Make sure pip is installed and updated
+sudo apt install python3-pip -y
+pip3 install --upgrade pip
+
+# Install Biopython
+pip3 install biopython
+
+********** Install this for figure generation**********
+
+conda install -c conda-forge numpy pandas seaborn matplotlib -y
+
+

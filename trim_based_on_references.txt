@@ -1,0 +1,22 @@
+
+#install the requirments
+conda install bioconda::seqkit
+conda install bioconda::samtools
+conda install bioconda::minimap2
+conda install conda-forge::ncbi-datasets-cli
+
+#run the following code
+# 1. Align the entire combined file against the reference
+minimap2 -x asm5 -a reference.fasta combine.fasta > combined_alignment.sam
+
+# 2. Convert to BAM and sort
+samtools view -bS combined_alignment.sam | samtools sort -o combined_sorted.bam
+
+# 3. Extract IDs of all contigs across all genomes that matched the reference
+samtools view -F 4 combined_sorted.bam | cut -f1 | sort -u > combined_mapped_ids.txt
+
+# 4. Pull out all matching sequences into a single trimmed file
+seqkit grep -f combined_mapped_ids.txt combine.fasta -o trimmed_combine.fasta
+
+# Clean up intermediate files
+rm combined_alignment.sam combined_sorted.bam combined_mapped_ids.txt

@@ -1,0 +1,14 @@
+
+##################### For downloading sekit ###############
+conda install -c bioconda seqkit
+
+################# fasta to table format ##############
+seqkit fx2tab input.fasta > output.tsv
+
+###############  table to fasta formate ###############
+seqkit tab2fx input.tsv > output.fasta
+
+#############
+
+
+

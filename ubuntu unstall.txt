@@ -1,0 +1,29 @@
+Turn windows features on or off
+
+Check the box > Windows subsystem for linux
+
+then go to command line (cmd)
+
+wsl --status
+
+wsl -l -o
+
+wsl --install
+
+or
+
+wsl --install -d ubuntu
+
+wsl --list --verbose
+
+wsl --list --online
+
+wsl --update
+
+sudo apt install nautilus -y
+
+wsl --shutdown
+
+wsl --set-default-version 2
+
+wsl --set-version Ubuntu24.04 2

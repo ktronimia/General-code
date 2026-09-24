@@ -1,0 +1,20 @@
+
+1. Download the linux version of Aspera following link
+
+https://www.ibm.com/products/aspera/downloads?utm
+
+2. unzip
+3. go to the folder and run following code
+
+chmod +x ibm-aspera-connect_4.2.18.918-HEAD_linux_x86_64.sh
+./ibm-aspera-connect_4.2.18.918-HEAD_linux_x86_64.sh
+~/.aspera/connect/bin/ascp --version
+echo 'export PATH=$PATH:$HOME/.aspera/connect/bin' >> ~/.bashrc
+source ~/.bashrc
+
+## downloads openssh from ncbi
+
+
+##all required file move to working directory(Here all file placed into "/home/ktronim/upload/..")
+
+ascp -i /home/ktronim/upload/aspera.openssh -QT -l100m -k1 -d /home/ktronim/upload subasp@upload.ncbi.nlm.nih.gov:uploads/mghossain_bau.edu.bd_96kuzP7s
