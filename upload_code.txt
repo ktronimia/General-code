@@ -1,0 +1,19 @@
+# go to the folder
+# clone you git repository(first time)
+git clone yourgitlink
+#move your file/code to the working directory
+git status
+git add yourfilename 
+git status
+git commit -m "general code"
+git push origin main
+#if shows the passward error then take a token from the git and run the followin code, in my case the token is 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
+
+git remote set-url origin https://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@github.com/ktronimia/NCBI_Metadata_Collection
+git push origin main
+# If it shows the error again, then run the following code
+git pull --rebase origin main
+git add .
+git rebase --continue
+git push origin main
+#
